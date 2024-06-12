@@ -44,33 +44,43 @@ Constraints:
 
 */
  
+// O(nlogn):
+class Solution
+{
+public:
+    int heightChecker(vector<int>& heights)
+    {
+        vector<int>expect=heights;
+        sort(heights.begin(), heights.end());
+        int cnt=0;
+        for(int i=0; i<heights.size(); i++)
+        {
+            if(heights[i]!=exect[i]) cnt++;
+        }
+        return cnt;
+    }
+};
+// O(n+k): coutnting sort
 class Solution {
 public:
     int heightChecker(vector<int>& heights) {
-        vector<char> sorted(heights.begin(), heights.end());
-        // counting sort
-        char freq[101]={0};
-        for(char x: sorted) freq[x]++;
-        int cnt=0;
-        for (int x=1; x<=100; x++){
-            int f=freq[x];
-            vector<char> f_x(f, x);
-            copy(begin(f_x), end(f_x), sorted.begin()+cnt);
-            cnt+=f;
+        vector<int>freq(101, 0);
+        for(auto it:heights) freq[it]++;
+        int i=0, j=0, n=heights.size(), cnt=0;
+        while(i<n)
+        {
+            if(freq[j]>0)
+            {
+                while(freq[j]>0)
+                {
+                    if(heights[i]!=j) cnt++;
+                    i++, freq[j]--;
+                }
+            }
+            j++;
         }
-        //end of count sort
-
-        int n=heights.size(), ans=0;
-        for(int i=0; i<n; i++)
-            ans+=(heights[i]!=sorted[i]);
-        return ans;      
+        return cnt;
     }
 };
 
 
-auto init = []() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    cout.tie(nullptr);
-    return 'c';
-}();
