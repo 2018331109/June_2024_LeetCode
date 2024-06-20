@@ -39,4 +39,26 @@ public:
         return false;
     }
 };
+//Two Pointer:
+#define ll long long
+class Solution
+{
+public:
+    bool judgeSquareSum(int c){
+        ll r=sqrt(c), l=0;
+        while(l<=r){
+                ll lr=(l*l)+(r*r);
+            if(lr==c){
+                return true;
+            }
+            if(lr<c){
+                l++;
+            }
+            else{
+                r--;
+            }
+        }
+        return false;
+    }
+};
 
